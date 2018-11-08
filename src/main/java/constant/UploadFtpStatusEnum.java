@@ -4,7 +4,7 @@ package constant;
  * @author jinzhimin
  * @description: FTP文件上传状态的枚举类
 */
-public enum UploadStatusEnum {
+public enum UploadFtpStatusEnum {
     /**
      * 断点上传成功。
      */

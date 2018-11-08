@@ -1,6 +1,6 @@
 package utils;
 
-import constants.UploadStatus;
+import constant.UploadFtpStatusEnum;
 import org.apache.commons.net.ftp.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +10,10 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * @author jinzhimin
+ * @description: FTP客户端工具类
+ */
 public class FtpClientUtil {
     private static final Logger logger = LoggerFactory.getLogger(FtpClientUtil.class);
 
@@ -33,13 +36,13 @@ public class FtpClientUtil {
         this.ftp = ftp;
     }
 
-    private UploadStatus uploadStatus;
+    private UploadFtpStatusEnum uploadStatus;
 
-    public UploadStatus getUploadStatus() {
+    public UploadFtpStatusEnum getUploadStatus() {
         return uploadStatus;
     }
 
-    public void setUploadStatus(UploadStatus uploadStatus) {
+    public void setUploadStatus(UploadFtpStatusEnum uploadStatus) {
         this.uploadStatus = uploadStatus;
     }
 
@@ -196,10 +199,10 @@ public class FtpClientUtil {
             long remoteSize = listFiles[0].getSize();
 
             if (remoteSize == localSize) {
-                this.setUploadStatus(UploadStatus.File_Exits);
+                this.setUploadStatus(UploadFtpStatusEnum.File_Exits);
                 return this;
             } else if (remoteSize > localSize) {
-                this.setUploadStatus(UploadStatus.Remote_Bigger_Local);
+                this.setUploadStatus(UploadFtpStatusEnum.Remote_Bigger_Local);
                 return this;
             }
             this.uploadFile(inputStream, name, remoteSize, localSize);
@@ -243,14 +246,14 @@ public class FtpClientUtil {
             boolean result = this.ftp.completePendingCommand();
             if (remoteSize > 0) {
                 this.setUploadStatus(
-                        result ? UploadStatus.Upload_From_Break_Success : UploadStatus.Upload_From_Break_Failed);
+                        result ? UploadFtpStatusEnum.Upload_From_Break_Success : UploadFtpStatusEnum.Upload_From_Break_Failed);
             } else {
                 this.setUploadStatus(
-                        result ? UploadStatus.Upload_New_File_Success : UploadStatus.Upload_New_File_Failed);
+                        result ? UploadFtpStatusEnum.Upload_New_File_Success : UploadFtpStatusEnum.Upload_New_File_Failed);
             }
         } catch (Exception e) {
             this.setUploadStatus(
-                    remoteSize > 0 ? UploadStatus.Upload_From_Break_Failed : UploadStatus.Upload_New_File_Failed);
+                    remoteSize > 0 ? UploadFtpStatusEnum.Upload_From_Break_Failed : UploadFtpStatusEnum.Upload_New_File_Failed);
         }
 
     }
@@ -452,7 +455,8 @@ public class FtpClientUtil {
     public void deleteFile(String fileName){
         String pwd = printWorkDir();
         try {
-            this.ftp.setControlEncoding("UTF-8"); // 中文支持
+            // 中文支持
+            this.ftp.setControlEncoding("UTF-8");
             this.ftp.enterLocalPassiveMode();
             this.ftp.deleteFile(fileName);
         } catch (IOException e) {
