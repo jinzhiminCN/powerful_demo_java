@@ -18,7 +18,7 @@ import javax.crypto.spec.SecretKeySpec;
  *   Hmac_MD5，Hmac_sha1，Hmac_sha224，Hmac_sha256，Hmac_sha384，Hmac_sha512。
  */
 public class HmacDemo {
-    private static final Logger logger = LoggerFactory.getLogger(FtpClientUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(HmacDemo.class);
 
     private static final String ENCODING = "UTF-8";
 
