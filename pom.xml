@@ -262,26 +262,6 @@
         </dependency>
 
         <!-- activemq -->
-        <!--<dependency>-->
-        <!--<groupId>org.apache.activemq</groupId>-->
-        <!--<artifactId>activemq-all</artifactId>-->
-        <!--<exclusions>-->
-        <!--<exclusion>-->
-        <!--<groupId>org.springframework</groupId>-->
-        <!--<artifactId>spring-core</artifactId>-->
-        <!--</exclusion>-->
-        <!--<exclusion>-->
-        <!--<groupId>org.springframework</groupId>-->
-        <!--<artifactId>spring-web</artifactId>-->
-        <!--</exclusion>-->
-        <!--<exclusion>-->
-        <!--<groupId>org.springframework</groupId>-->
-        <!--<artifactId>spring-webmvc</artifactId>-->
-        <!--</exclusion>-->
-        <!--</exclusions>-->
-        <!--<version>5.14.5</version>-->
-        <!--</dependency>-->
-
         <dependency>
             <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-broker</artifactId>
@@ -303,23 +283,21 @@
             <version>2.3.0</version>
         </dependency>
 
-        <!--******************** nlp相关 ********************-->
-        <!-- HanLP -->
+        <!-- rabbitmq -->
         <dependency>
-            <groupId>com.hankcs</groupId>
-            <artifactId>hanlp</artifactId>
-            <version>1.6.3</version>
+            <groupId>com.rabbitmq</groupId>
+            <artifactId>amqp-client</artifactId>
+            <version>3.6.5</version>
         </dependency>
 
-        <!-- IKAnalyzer -->
-        <!-- ik-analyzer分词器 -->
-        <!--
+        <!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka -->
         <dependency>
-            <groupId>ik</groupId>
-            <artifactId>IKAnalyzer</artifactId>
-            <version>2012FF_u1</version>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka_2.11</artifactId>
+            <version>2.0.1</version>
         </dependency>
-         -->
+
+        <!--******************** nlp相关 ********************-->
         <dependency>
             <groupId>com.janeluo</groupId>
             <artifactId>ikanalyzer</artifactId>
@@ -332,26 +310,6 @@
             <version>${lucene.version}</version>
         </dependency>
         <!-- smartcn分词器 需要lucene依赖 且和lucene版本同步 -->
-
-
-        <!-- stanford分词器 -->
-        <dependency>
-            <groupId>edu.stanford.nlp</groupId>
-            <artifactId>stanford-corenlp</artifactId>
-            <version>${stanford.version}</version>
-        </dependency>
-        <!--<dependency>-->
-        <!--<groupId>edu.stanford.nlp</groupId>-->
-        <!--<artifactId>stanford-corenlp</artifactId>-->
-        <!--<version>${stanford.version}</version>-->
-        <!--<classifier>models</classifier>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>edu.stanford.nlp</groupId>-->
-        <!--<artifactId>stanford-corenlp</artifactId>-->
-        <!--<version>${stanford.version}</version>-->
-        <!--<classifier>models-chinese</classifier>-->
-        <!--</dependency>-->
 
         <!-- ansj分词器 -->
 
