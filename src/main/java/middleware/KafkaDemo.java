@@ -45,7 +45,7 @@ public class KafkaDemo {
     }
 
     public static void produce() {
-        long events = 10000L;
+        long totalEvent = 10000L;
         Random rnd = new Random();
 
         Properties props = new Properties();
@@ -62,7 +62,7 @@ public class KafkaDemo {
 
         Producer<String, String> producer = new KafkaProducer<>(props);
 
-        for (long nEvents = 0; nEvents < events; nEvents++) {
+        for (long event = 0; event < totalEvent; event++) {
             long runtime = System.currentTimeMillis();
             String ip = "192.168.2." + rnd.nextInt(255);
             String msg = runtime + ",www.example.com," + ip;
