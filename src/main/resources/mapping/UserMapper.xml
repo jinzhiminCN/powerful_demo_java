@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapping.UserMapper">
+    <!-- 自定义返回结果集 -->
+    <resultMap id="userMap" type="entity.UserDO">
+        <id property="id" column="id" javaType="java.lang.Integer"></id>
+        <result property="userName" column="user_name" javaType="java.lang.String"></result>
+        <result property="userPasswd" column="user_passwd" javaType="java.lang.String"></result>
+        <result property="account" column="account" javaType="java.math.BigDecimal"></result>
+    </resultMap>
+
+    <select id="selectUserById" parameterType="int" resultMap="userMap">
+        select * from t_user where id = #{id}
+    </select>
+
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
+        insert into t_user (user_name, user_passwd, account) values (#{userName}, #{userPasswd}, #{account})
+    </insert>
+
+    <insert id="insertUserList" useGeneratedKeys="true" keyProperty="id">
+        insert into t_user
+        <include refid="allColumnsWithoutId"/>
+        values
+        <foreach item="item" collection="list" separator=",">
+            <include refid="allItemValuesWithoutId"/>
+        </foreach>
+    </insert>
+
+    <update id="updateUser" >
+        update t_user set user_name=#{userName}, user_passwd=#{userPasswd}, account=#{account} where id = #{id}
+    </update>
+
+    <delete id="deleteUser" parameterType="int">
+        delete from t_user where id = #{id}
+    </delete>
+
+    <select id="selectAllUser" resultMap="userMap">
+        select * from t_user
+    </select>
+
+    <sql id="allColumns">
+        (id, user_name, user_passwd, account)
+    </sql>
+
+    <sql id="allValues">
+        (#{id}, #{userName}, #{userPasswd}, #{account,jdbcType=NUMERIC})
+    </sql>
+
+    <sql id="allItemValues">
+        (#{item.id}, #{item.userName}, #{item.userPasswd}, #{item.account})
+    </sql>
+
+    <sql id="allColumnsWithoutId">
+        (user_name, user_passwd, account)
+    </sql>
+
+    <sql id="allValuesWithoutId">
+        (#{userName}, #{userPasswd}, #{account,jdbcType=NUMERIC})
+    </sql>
+
+    <sql id="allItemValuesWithoutId">
+        (#{item.userName}, #{item.userPasswd}, #{item.account})
+    </sql>
+</mapper>
+
+
+
+
+

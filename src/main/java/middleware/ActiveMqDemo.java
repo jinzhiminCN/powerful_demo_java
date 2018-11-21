@@ -14,12 +14,12 @@ import java.io.IOException;
 public class ActiveMqDemo {
     private static final Logger logger = LoggerFactory.getLogger(ActiveMqDemo.class);
 
-    private static final String brokerUrl = "failover://(tcp://10.255.33.51:61616)";
+    private static final String brokerUrl = "failover://(tcp://localhost:61616)";
 
     private static ConnectionFactory connectionFactory = null;
 
     static{
-        //1、创建工厂连接对象，需要制定ip和端口号
+        // 1、创建工厂连接对象，需要制定ip和端口号
         try {
             connectionFactory = new ActiveMQConnectionFactory(brokerUrl);
         } catch (Exception e) {
@@ -35,8 +35,6 @@ public class ActiveMqDemo {
             e.printStackTrace();
         }
     }
-
-
 
     public static void testMqProducerQueue(){
         sendToQueue("queue.test", "queue.hello");
@@ -82,24 +80,24 @@ public class ActiveMqDemo {
         MessageProducer producer = null;
 
         try {
-            //1、使用连接工厂创建一个连接对象
+            // 1、使用连接工厂创建一个连接对象
             connection = connectionFactory.createConnection();
-            //2、开启连接
+            // 2、开启连接
             connection.start();
-            //3、使用连接对象创建会话（session）对象
+            // 3、使用连接对象创建会话（session）对象
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            //4、使用会话对象创建目标对象，包含queue和topic（一对一和一对多）
+            // 4、使用会话对象创建目标对象，包含queue和topic（一对一和一对多）
             Queue queue = session.createQueue(queueName);
-            //5、使用会话对象创建生产者对象
+            // 5、使用会话对象创建生产者对象
             producer = session.createProducer(queue);
-            //6、使用会话对象创建一个消息对象
+            // 6、使用会话对象创建一个消息对象
             TextMessage textMessage = session.createTextMessage(value);
-            //7、发送消息
+            // 7、发送消息
             producer.send(textMessage);
         } catch (JMSException e) {
             logger.info("ActiveMQ 出现异常", e);
         } finally {
-            //8、关闭资源
+            // 8、关闭资源
             if(producer != null) {
                 try {
                     producer.close();
@@ -118,17 +116,17 @@ public class ActiveMqDemo {
         Session session = null;
         MessageConsumer consumer = null;
         try {
-            //1、使用连接工厂创建一个连接对象
+            // 1、使用连接工厂创建一个连接对象
             connection = connectionFactory.createConnection();
-            //2、开启连接
+            // 2、开启连接
             connection.start();
-            //3、使用连接对象创建会话（session）对象
+            // 3、使用连接对象创建会话（session）对象
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            //4、使用会话对象创建目标对象，包含queue和topic（一对一和一对多）
+            // 4、使用会话对象创建目标对象，包含queue和topic（一对一和一对多）
             Queue queue = session.createQueue(queueName);
-            //5、使用会话对象创建生产者对象
+            // 5、使用会话对象创建生产者对象
             consumer = session.createConsumer(queue);
-            //6、向consumer对象中设置一个messageListener对象，用来接收消息
+            // 6、向consumer对象中设置一个messageListener对象，用来接收消息
             consumer.setMessageListener(consumerMessageListener);
             logger.info(consumerMessageListener.getMsgContent());
         } catch (JMSException e){
