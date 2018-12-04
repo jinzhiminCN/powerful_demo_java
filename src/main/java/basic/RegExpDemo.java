@@ -25,7 +25,7 @@ public class RegExpDemo {
      * 则表达式引擎的会多些。现在再来看^(a+)+$，当用它去匹配“aaaax”这个字符串时，需要尝试2^4=16次才会
      * 失败，当这个字符串再长一点时，需要尝试的次数会成指数增长，aaaaaaaaaaX就要经历2^10=1024次尝试。
      */
-    public static void testRegExpCrash(){
+    public static void testRegExpCrash() {
         String regularExp = "(x+x+)+y";
         String testStr = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
@@ -53,7 +53,6 @@ public class RegExpDemo {
     }
 
     /**
-     *
      * @param inputStr
      * @param regex
      * @return
