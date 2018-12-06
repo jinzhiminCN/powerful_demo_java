@@ -18,9 +18,12 @@ import java.nio.channels.FileChannel;
 public class ChannelDemo {
     private static final Logger logger = LoggerFactory.getLogger(ChannelDemo.class);
 
+    private static final String fromFilePath = "fromFile.txt";
+    private static final String toFilePath = "toFile.txt";
+
     public static void testFileChannel(){
         try {
-            RandomAccessFile raFile = new RandomAccessFile("test.txt", "rw");
+            RandomAccessFile raFile = new RandomAccessFile(fromFilePath, "rw");
             FileChannel inChannel = raFile.getChannel();
 
             ByteBuffer buf = ByteBuffer.allocate(48);
@@ -47,9 +50,26 @@ public class ChannelDemo {
         }
     }
 
+    public static void testTransferChannel(){
+        try {
+            RandomAccessFile fromFile = new RandomAccessFile(fromFilePath, "rw");
+            FileChannel      fromChannel = fromFile.getChannel();
+
+            RandomAccessFile toFile = new RandomAccessFile(toFilePath, "rw");
+            FileChannel      toChannel = toFile.getChannel();
+
+            long position = 0;
+            long count = fromChannel.size();
+
+            toChannel.transferFrom(fromChannel, position, count);
+        } catch (IOException e) {
+            logger.info("出现IO异常！", e);
+        }
+    }
 
 
     public static void main(String[] args) {
-        testFileChannel();
+//        testFileChannel();
+        testTransferChannel();
     }
 }
