@@ -18,8 +18,6 @@ import java.util.Set;
  * @author jinzhimin
  * @description: NIO server,
  *     reactor（反应器）模式，使用单线程模拟多线程，提高资源利用率和程序的效率，增加系统吞吐量。
- * @email jinzhimin@youxin.com
- * @since 2018/12/6 10:27
  */
 public class Reactor implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(Reactor.class);

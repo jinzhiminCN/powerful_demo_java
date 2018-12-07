@@ -12,8 +12,6 @@ import java.net.Socket;
 /**
  * @author jinzhimin
  * @description: ${description}
- * @email jinzhimin@youxin.com
- * @since 2018/12/6 11:13
  */
 public class TestReactor {
     private static final Logger logger = LoggerFactory.getLogger(TestReactor.class);

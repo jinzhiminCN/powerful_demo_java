@@ -5,15 +5,15 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.channels.SocketChannel;
 
 /**
  * @author jinzhimin
  * @description: NIO channel示例。
- * @email jinzhimin@youxin.com
- * @since 2018/12/6 14:32
  */
 public class ChannelDemo {
     private static final Logger logger = LoggerFactory.getLogger(ChannelDemo.class);
@@ -22,8 +22,9 @@ public class ChannelDemo {
     private static final String toFilePath = "toFile.txt";
 
     public static void testFileChannel(){
+        RandomAccessFile raFile = null;
         try {
-            RandomAccessFile raFile = new RandomAccessFile(fromFilePath, "rw");
+            raFile = new RandomAccessFile(fromFilePath, "rw");
             FileChannel inChannel = raFile.getChannel();
 
             ByteBuffer buf = ByteBuffer.allocate(48);
@@ -44,9 +45,16 @@ public class ChannelDemo {
                 buf.clear();
                 bytesRead = inChannel.read(buf);
             }
-            raFile.close();
         } catch (IOException e) {
             logger.info("IO异常！", e);
+        } finally {
+            try {
+                if(raFile != null) {
+                    raFile.close();
+                }
+            } catch (IOException e) {
+                logger.info("IO关闭异常！", e);
+            }
         }
     }
 
@@ -67,9 +75,52 @@ public class ChannelDemo {
         }
     }
 
+    /**
+     * 目前不能运行。
+     */
+    public static void testSocketChannel(){
+        SocketChannel socketChannel = null;
+        try {
+            socketChannel = SocketChannel.open();
+            socketChannel.connect(new InetSocketAddress("www.baidu.com", 80));
+
+            ByteBuffer buf = ByteBuffer.allocate(102400);
+            int bytesRead = socketChannel.read(buf);
+
+            while (bytesRead != -1) {
+                logger.info("Read " + bytesRead);
+
+                // 写模式转换为读模式
+                buf.flip();
+
+                byte[] valueArray = new byte[48];
+                while(buf.hasRemaining()){
+                    buf.get(valueArray);
+                    logger.info(new String(valueArray));
+                }
+
+                buf.clear();
+                bytesRead = socketChannel.read(buf);
+            }
+
+        } catch (IOException e) {
+            logger.info("出现IO异常！", e);
+        } finally {
+            try {
+                if(socketChannel != null) {
+                    socketChannel.close();
+                }
+            } catch (IOException e) {
+                logger.info("IO关闭异常！", e);
+            }
+        }
+
+    }
+
 
     public static void main(String[] args) {
 //        testFileChannel();
-        testTransferChannel();
+//        testTransferChannel();
+        testSocketChannel();
     }
 }

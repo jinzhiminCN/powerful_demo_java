@@ -13,8 +13,6 @@ import java.net.Socket;
 /**
  * @author jinzhimin
  * @description: BIO服务
- * @email jinzhimin@youxin.com
- * @since 2018/12/6 11:38
  */
 public class BioServer implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(Reactor.class);

@@ -8,8 +8,6 @@ import java.nio.*;
 /**
  * @author jinzhimin
  * @description: NIO buffer示例。
- * @email jinzhimin@youxin.com
- * @since 2018/12/6 19:18
  */
 public class BufferDemo {
     private static final Logger logger = LoggerFactory.getLogger(Reactor.class);
