@@ -33,9 +33,11 @@ public class Reactor implements Runnable {
 
     public void init() {
         try {
-            // 创建通道和选择器
+            // 创建服务Socket通道
             ServerSocketChannel socketChannel = ServerSocketChannel.open();
+            // 创建选择器
             Selector selector = Selector.open();
+            // 服务器通道绑定主机和端口
             InetSocketAddress inetSocketAddress = new InetSocketAddress(
                     InetAddress.getLocalHost(), port);
             socketChannel.socket().bind(inetSocketAddress);
