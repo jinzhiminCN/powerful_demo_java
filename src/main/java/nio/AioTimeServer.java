@@ -13,13 +13,13 @@ public class AioTimeServer {
     private int port = 8080;
 
     public void startServer() {
-        MultiplexerTimeServer timeServer = new MultiplexerTimeServer(port);
+        AsyncTimeServerHandler timeServer = new AsyncTimeServerHandler(port);
 
         new Thread(timeServer, "NOI-MultiplexerTimeServer-001").start();
     }
 
     public static void main(String[] args) {
-        AioTimeServer nioTimeServer = new AioTimeServer();
-        nioTimeServer.startServer();
+        AioTimeServer aioTimeServer = new AioTimeServer();
+        aioTimeServer.startServer();
     }
 }

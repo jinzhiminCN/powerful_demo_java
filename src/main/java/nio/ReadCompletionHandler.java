@@ -21,6 +21,8 @@ public class ReadCompletionHandler implements
 
     private AsynchronousSocketChannel asynchronousSocketChannel;
 
+    private String LINE_END = "\r\n";
+
     public ReadCompletionHandler(AsynchronousSocketChannel asynchronousSocketChannel) {
         this.asynchronousSocketChannel = asynchronousSocketChannel;
     }
@@ -32,7 +34,7 @@ public class ReadCompletionHandler implements
             try {
                 asynchronousSocketChannel.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.info("出现IO异常", e);
             }
             return;
         }
@@ -45,18 +47,19 @@ public class ReadCompletionHandler implements
             String command = null;
             try {
                 command = new String(data, "UTF-8");
-                if ("time\r\n".equalsIgnoreCase(command)) {
-                    doWrite(new Date().toString() + "\r\n");
-                } else if ("stop\r\n".equalsIgnoreCase(command)) {
-                    doWriteAndClose("bye.\r\n");
-                } else if ("\r\n".equalsIgnoreCase(command)) {
-                    doWrite("\r\n");
+
+                if (TimeOrderConst.QUERY_TIME_ORDER.equalsIgnoreCase(command)) {
+                    doWrite(new Date().toString() + LINE_END);
+                } else if (TimeOrderConst.STOP_ORDER.equalsIgnoreCase(command)) {
+                    doWriteAndClose("bye." + LINE_END);
+                } else if (LINE_END.equalsIgnoreCase(command)) {
+                    doWrite(LINE_END);
                 } else {
-                    doWrite("unknown command\r\n");
+                    doWrite("unknown command" + LINE_END);
                 }
             } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-                doWrite("server error\r\n");
+                logger.info("出现IO异常", e);
+                doWrite("server error" + LINE_END);
             }
         }
         //如果未读取到数据
@@ -72,7 +75,7 @@ public class ReadCompletionHandler implements
         try {
             repBuf = ByteBuffer.wrap(response.getBytes("UTF-8"));
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            logger.info("出现不支持的编码异常", e);
         }
         if (repBuf != null) {
             asynchronousSocketChannel.write(repBuf, repBuf, new CompletionHandler<Integer, ByteBuffer>() {
@@ -81,12 +84,12 @@ public class ReadCompletionHandler implements
                     if (repBuf.hasRemaining()) {
                         asynchronousSocketChannel.write(repBuf, repBuf, this);
                     }
-                    //写完成后，关闭链路
+                    // 写完成后，关闭链路
                     else {
                         try {
                             asynchronousSocketChannel.close();
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            logger.info("出现IO异常", e);
                         }
                     }
                 }
@@ -97,7 +100,7 @@ public class ReadCompletionHandler implements
                     try {
                         asynchronousSocketChannel.close();
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        logger.info("出现IO异常", e);
                     }
                 }
             });
@@ -109,7 +112,7 @@ public class ReadCompletionHandler implements
         try {
             repBuf = ByteBuffer.wrap(response.getBytes("UTF-8"));
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            logger.info("出现不支持的编码异常", e);
         }
         if (repBuf != null) {
             asynchronousSocketChannel.write(repBuf, repBuf, new WriteCompletionHandler(asynchronousSocketChannel, this));
@@ -123,7 +126,7 @@ public class ReadCompletionHandler implements
         try {
             asynchronousSocketChannel.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.info("出现IO异常", e);
         }
     }
 

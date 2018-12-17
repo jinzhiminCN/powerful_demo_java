@@ -21,9 +21,6 @@ import java.util.concurrent.CountDownLatch;
 public class AsyncTimeServerHandler implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(AsyncTimeServerHandler.class);
 
-    public static final String QUERY_TIME_ORDER = "QUERY TIME ORDER";
-    public static final String BAD_ORDER = "BAD ORDER";
-
     private int port;
 
     private CountDownLatch latch;

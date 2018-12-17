@@ -32,9 +32,9 @@ public class WriteCompletionHandler implements
         if (repBuf.hasRemaining()) {
             asynchronousSocketChannel.write(repBuf, repBuf, this);
         }
-        //写完成后(对端读取完成)，再尝试读（半双工模式）
+        // 写完成后(对端读取完成)，再尝试读（半双工模式）
         else {
-            //继续尝试读取对端发送的数据
+            // 继续尝试读取对端发送的数据
             ByteBuffer readBuf = ByteBuffer.allocate(1024);
             asynchronousSocketChannel.read(readBuf, readBuf, readCompletionHandler);
         }
@@ -47,7 +47,7 @@ public class WriteCompletionHandler implements
         try {
             asynchronousSocketChannel.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.info("出现IO异常", e);
         }
     }
 
