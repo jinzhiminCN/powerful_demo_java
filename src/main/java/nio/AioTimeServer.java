@@ -15,7 +15,7 @@ public class AioTimeServer {
     public void startServer() {
         AsyncTimeServerHandler timeServer = new AsyncTimeServerHandler(port);
 
-        new Thread(timeServer, "NOI-MultiplexerTimeServer-001").start();
+        new Thread(timeServer, "AIO-AsyncTimeServerHandler-001").start();
     }
 
     public static void main(String[] args) {
