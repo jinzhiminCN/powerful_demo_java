@@ -4,7 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.GsonUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -36,19 +38,29 @@ public class BasicCollectionDemo {
         }
 
         logger.info(GsonUtil.getGson().toJson(mapInit2));
+        logger.info(GsonUtil.getGson().toJson(new HashMap(mapInit2)));
+    }
 
-
+    public static void testInitList(){
+        List<String> names = new ArrayList<String>() {
+            {
+                for (int i = 0; i < 10; i++) {
+                    add("A" + i);
+                }
+            }
+        };
+        logger.info(names.toString());
     }
 
     public static void testInstanceDemo(){
         new InstanceDemo();
-
         new InstanceDemo();
     }
 
     public static void main(String[] args) {
-//        testInitHashMap();
-          testInstanceDemo();
+        testInitHashMap();
+//        testInstanceDemo();
+//          testInitList();
     }
 
 }

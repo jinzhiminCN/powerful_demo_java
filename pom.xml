@@ -286,6 +286,14 @@
             <version>2.0.1</version>
         </dependency>
 
+        <!-- netty -->
+        <!-- https://mvnrepository.com/artifact/io.netty/netty -->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty</artifactId>
+            <version>4.0.0.Alpha8</version>
+        </dependency>
+
         <!--******************** 数据库相关 ********************-->
         <!-- mysql -->
         <dependency>
