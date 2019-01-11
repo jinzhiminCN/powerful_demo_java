@@ -34,7 +34,7 @@ public class NettyTimeClientHandler extends ChannelHandlerAdapter {
         buf.readBytes(req);
 
         String body = new String(req, "UTF-8");
-        System.out.println("Now is:" + body);
+        logger.info("Now is:" + body);
     }
 
     @Override

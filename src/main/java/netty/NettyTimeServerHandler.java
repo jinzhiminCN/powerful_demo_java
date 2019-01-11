@@ -4,6 +4,9 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
+import nio.TimeOrderConst;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 
@@ -12,6 +15,7 @@ import java.util.Date;
  * @description: Netty时间服务处理器
  */
 public class NettyTimeServerHandler extends ChannelHandlerAdapter {
+    private static final Logger logger = LoggerFactory.getLogger(NettyTimeServerHandler.class);
 
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         ByteBuf buf = (ByteBuf)msg;
@@ -19,9 +23,9 @@ public class NettyTimeServerHandler extends ChannelHandlerAdapter {
         buf.readBytes(req);
 
         String body = new String(req, "UTF-8");
-        System.out.println("The time server receive order:" + body);
-        String currentTime = "QUERY TIME ORDER".equalsIgnoreCase(body) ?
-                new Date(System.currentTimeMillis()).toString() : "BAD ORDER";
+        logger.info("The time server receive order:" + body);
+        String currentTime = TimeOrderConst.QUERY_TIME_ORDER.equalsIgnoreCase(body) ?
+                new Date(System.currentTimeMillis()).toString() : TimeOrderConst.BAD_ORDER;
 
         ByteBuf resp = Unpooled.copiedBuffer(currentTime.getBytes());
         ctx.write(resp);
