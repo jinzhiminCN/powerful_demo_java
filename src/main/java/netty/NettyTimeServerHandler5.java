@@ -12,12 +12,14 @@ import java.util.Date;
 
 /**
  * @author jinzhimin
- * @description: Netty时间服务处理器
+ * @description: Netty 5 版本的时间服务器处理类
  */
-public class NettyTimeServerHandler extends ChannelHandlerAdapter {
-    private static final Logger logger = LoggerFactory.getLogger(NettyTimeServerHandler.class);
+public class NettyTimeServerHandler5 extends ChannelHandlerAdapter {
+    private static final Logger logger = LoggerFactory.getLogger(NettyTimeServerHandler5.class);
 
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        logger.info("Netty Time Server Handler channelRead.");
+
         ByteBuf buf = (ByteBuf)msg;
         byte[] req = new byte[buf.readableBytes()];
         buf.readBytes(req);

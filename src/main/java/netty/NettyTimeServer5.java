@@ -11,9 +11,9 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 /**
  * @author jinzhimin
- * @description: Netty 时间服务器
+ * @description: Netty 5 版本的时间服务器
  */
-public class NettyTimeServer {
+public class NettyTimeServer5 {
     public void bind(int port) throws Exception {
         // NIO线程组
         EventLoopGroup bossGroup = new NioEventLoopGroup();
@@ -40,7 +40,7 @@ public class NettyTimeServer {
     private class ChildChannelHandler extends ChannelInitializer<SocketChannel> {
         @Override
         protected void initChannel(SocketChannel arg0) throws Exception {
-            arg0.pipeline().addLast(new NettyTimeServerHandler());
+            arg0.pipeline().addLast(new NettyTimeServerHandler5());
         }
     }
 

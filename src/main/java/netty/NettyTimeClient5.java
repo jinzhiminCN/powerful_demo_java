@@ -11,9 +11,9 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 
 /**
  * @author jinzhimin
- * @description: ${description}
+ * @description: Netty 5 版本的 TimeClient
  */
-public class NettyTimeClient {
+public class NettyTimeClient5 {
 
     public void connect(int port, String host) throws Exception {
         EventLoopGroup group = new NioEventLoopGroup();
@@ -25,7 +25,7 @@ public class NettyTimeClient {
                     .option(ChannelOption.TCP_NODELAY, true)
                     .handler(new ChannelInitializer<SocketChannel>() {
                         protected void initChannel(SocketChannel ch) throws Exception {
-                            ch.pipeline().addLast(new NettyTimeClientHandler());
+                            ch.pipeline().addLast(new NettyTimeClientHandler5());
                         };
                     });
 

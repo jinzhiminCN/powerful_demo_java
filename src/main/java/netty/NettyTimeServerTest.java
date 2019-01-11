@@ -6,14 +6,14 @@ package netty;
  */
 public class NettyTimeServerTest {
 
-    public void timeServerTest() throws Exception {
-        new NettyTimeServer().bind(8080);
+    public void timeServer5Test() throws Exception {
+        new NettyTimeServer5().bind(8080);
     }
 
     public static void main(String[] args) {
         NettyTimeServerTest timeServerTest = new NettyTimeServerTest();
         try {
-            timeServerTest.timeServerTest();
+            timeServerTest.timeServer5Test();
         } catch (Exception e) {
             e.printStackTrace();
         }

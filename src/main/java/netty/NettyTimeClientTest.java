@@ -2,18 +2,18 @@ package netty;
 
 /**
  * @author jinzhimin
- * @description: ${description}
+ * @description: 测试 NettyTimeClient
  */
 public class NettyTimeClientTest {
 
-    public void timeClientTest() throws Exception {
-        new NettyTimeClient().connect(8080, "127.0.0.1");
+    public void timeClient5Test() throws Exception {
+        new NettyTimeClient5().connect(8080, "127.0.0.1");
     }
 
     public static void main(String[] args) {
         NettyTimeClientTest timeClientTest = new NettyTimeClientTest();
         try {
-            timeClientTest.timeClientTest();
+            timeClientTest.timeClient5Test();
         } catch (Exception e) {
             e.printStackTrace();
         }
