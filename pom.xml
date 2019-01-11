@@ -72,7 +72,7 @@
                 <configuration>
                     <!-- 指定打包的目录 -->
                     <includes>
-                        <include>com/**</include>
+                        <include>**</include>
                         <include>/logback.xml</include>
                     </includes>
                 </configuration>
@@ -117,13 +117,6 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>1.1.2</version>
-        </dependency>
-
-        <!-- mysql -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.23</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/c3p0/c3p0 -->
@@ -287,11 +280,13 @@
         </dependency>
 
         <!-- netty -->
+        <!-- netty 5 被废弃掉了 -->
         <!-- https://mvnrepository.com/artifact/io.netty/netty -->
         <dependency>
             <groupId>io.netty</groupId>
-            <artifactId>netty</artifactId>
-            <version>4.0.0.Alpha8</version>
+            <artifactId>netty-all</artifactId>
+            <!--<version>5.0.0.Alpha1</version>-->
+            <version>4.1.32.Final</version>
         </dependency>
 
         <!--******************** 数据库相关 ********************-->
