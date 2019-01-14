@@ -1,5 +1,6 @@
 package netty;
 
+import netty.netty4.NettyTimeServer4;
 import netty.netty5.NettyTimeServer5;
 
 /**
@@ -12,10 +13,14 @@ public class NettyTimeServerTest {
         new NettyTimeServer5().bind(8080);
     }
 
+    public void timeServer4Test() throws Exception {
+        new NettyTimeServer4().bind(8080);
+    }
+
     public static void main(String[] args) {
         NettyTimeServerTest timeServerTest = new NettyTimeServerTest();
         try {
-            timeServerTest.timeServer5Test();
+            timeServerTest.timeServer4Test();
         } catch (Exception e) {
             e.printStackTrace();
         }
