@@ -25,6 +25,22 @@ public class NettyTimeServerHandler4 extends ChannelInboundHandlerAdapter {
         logger.info("Netty Time Server Handler channelRead.");
         counter++;
 
+        String body = (String)msg;
+        logger.info("The time server receive order:" + body + "; the counter is :" + counter);
+        String currentTime = TimeOrderConst.QUERY_TIME_ORDER.equalsIgnoreCase(body) ?
+                new Date(System.currentTimeMillis()).toString() : TimeOrderConst.BAD_ORDER;
+
+        // 增加换行符
+        currentTime = currentTime + System.getProperty("line.separator");
+
+        ByteBuf resp = Unpooled.copiedBuffer(currentTime.getBytes());
+        ctx.write(resp);
+    }
+
+    public void channelRead2(ChannelHandlerContext ctx, Object msg) throws Exception {
+        logger.info("Netty Time Server Handler channelRead.");
+        counter++;
+
         ByteBuf buf = (ByteBuf) msg;
         byte[] req = new byte[buf.readableBytes()];
         buf.readBytes(req);

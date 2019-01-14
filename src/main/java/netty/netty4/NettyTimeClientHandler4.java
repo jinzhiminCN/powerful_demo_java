@@ -27,17 +27,16 @@ public class NettyTimeClientHandler4 extends ChannelInboundHandlerAdapter {
 
     public NettyTimeClientHandler4() {
         logger.info("Netty Time Client Handler Init.");
-        byte[] req = TimeOrderConst.QUERY_TIME_ORDER.getBytes();
+        byte[] req = (TimeOrderConst.QUERY_TIME_ORDER + System.getProperty("line.separator")).getBytes();
         firstMessage = Unpooled.buffer(req.length);
         firstMessage.writeBytes(req);
 
-        reqBytes = TimeOrderConst.QUERY_TIME_ORDER.getBytes();
+        reqBytes = (TimeOrderConst.QUERY_TIME_ORDER + System.getProperty("line.separator")).getBytes();
     }
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         logger.info("Netty Time Client Handler channelActive.");
-//        ctx.writeAndFlush(firstMessage);
 
         ByteBuf message = null;
         for(int i = 0; i < 100; i++){
@@ -49,6 +48,14 @@ public class NettyTimeClientHandler4 extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        logger.info("Netty Time Client Handler channelRead.");
+        counter++;
+
+        String body = (String)msg;
+        logger.info("Now is:" + body + "; the counter is: " + counter);
+    }
+
+    public void channelRead2(ChannelHandlerContext ctx, Object msg) throws Exception {
         logger.info("Netty Time Client Handler channelRead.");
         counter++;
 
