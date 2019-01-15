@@ -1,41 +1,33 @@
 package netty.netty5;
 
-import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.EventLoopGroup;
-import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.channel.socket.nio.NioSocketChannel;
+import netty.NettyClient;
+import netty.netty4.NettyTimeClient4;
 
 /**
  * @author jinzhimin
  * @description: Netty 5 版本的 TimeClient
  */
-public class NettyTimeClient5 {
+public class NettyTimeClient5 extends NettyClient{
 
-    public void connect(int port, String host) throws Exception {
-        EventLoopGroup group = new NioEventLoopGroup();
+    public NettyTimeClient5(ChannelInitializer<SocketChannel> channelInitializer){
+        super.channelInitializer = channelInitializer;
+    }
+
+    public static void main(String[] args) {
+        NettyTimeClient4 timeClient = new NettyTimeClient4(new ChildClientChannelHandler());
         try {
-            Bootstrap bootstrap = new Bootstrap();
-
-            bootstrap.group(group)
-                    .channel(NioSocketChannel.class)
-                    .option(ChannelOption.TCP_NODELAY, true)
-                    .handler(new ChannelInitializer<SocketChannel>() {
-                        protected void initChannel(SocketChannel ch) throws Exception {
-                            ch.pipeline().addLast(new NettyTimeClientHandler5());
-                        };
-                    });
-
-            // 发起异步连接操作
-            ChannelFuture future = bootstrap.connect(host, port).sync();
-            // 等待客户端连接关闭
-            future.channel().closeFuture().sync();
-        } finally {
-            // 优雅退出，释放NIO线程组
-            group.shutdownGracefully();
+            timeClient.connect(8080, "127.0.0.1");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
+}
+
+class ChildClientChannelHandler extends ChannelInitializer<SocketChannel> {
+    @Override
+    protected void initChannel(SocketChannel socketChannel) throws Exception {
+        socketChannel.pipeline().addLast(new NettyTimeClientHandler5());
     }
 }
