@@ -11,7 +11,6 @@
     <!-- Errors were reported during translation. -->
     <!-- No class found for appender jmonitor -->
     <!-- Could not find transformer for null -->
-    <!-- 日志统一放在 ${user.home}/logs -->
     <property name="logs.path" value="../logs"/>
     <property name="log.name" value="powerful_demo_java"/>
     <property name="result.yes" value="Y"/>
@@ -25,11 +24,23 @@
         </encoder>
     </appender>
 
+    　　　　　　　　　　
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logs.path}/logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%-5level | %d{yyyy-MM-dd HH:mm:ss} | [%t] (%F:%L\) - %msg%n</pattern>
+        </encoder>
+    </appender>
+
     <logger name="common_info" additivity="true" level="INFO">
         <appender-ref ref="CONSOLE"/>
     </logger>
 
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
     </root>
 </configuration>
