@@ -1,18 +1,12 @@
 package netty.netty4;
 
-import io.netty.bootstrap.Bootstrap;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
-import io.netty.channel.*;
-import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.DelimiterBasedFrameDecoder;
-import io.netty.handler.codec.serialization.ClassResolver;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
-import io.netty.handler.codec.string.StringDecoder;
 import netty.NettyClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,6 +65,8 @@ class SubReqClientHandler extends ChannelInboundHandlerAdapter {
         req.setSubReqID(i);
         req.setUserName("zhangsan");
         return req;
+
+
     }
 
     @Override
