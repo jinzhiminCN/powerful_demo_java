@@ -13,9 +13,9 @@ public class NioTimeClient {
     private int port = 8080;
 
     public void startClient() {
-        TimeClientHandler timeClient = new TimeClientHandler("10.255.6.144", port);
+        TimeClientHandler timeClient = new TimeClientHandler("127.0.0.1", port);
 
-        new Thread(timeClient, "TimeClient-001").start();
+        new Thread(timeClient, "NettyTimeClient-001").start();
     }
 
     public static void main(String[] args) {
