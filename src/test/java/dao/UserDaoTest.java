@@ -1,13 +1,12 @@
 package dao;
 
 import entity.UserDO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import utils.GsonUtil;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import utils.GsonUtil;
 
 /**
  * @author jinzhimin
@@ -48,6 +47,8 @@ public class UserDaoTest {
     }
 
     public static void main(String[] args) {
+//        PropertyConfigurator.configure("src/main/resource/log4j.properties");
+
         selectById();
     }
 }

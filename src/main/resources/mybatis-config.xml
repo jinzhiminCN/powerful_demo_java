@@ -1,25 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+
+    <!-- 引入数据库连接配置文件 -->
+    <properties resource="db.properties"></properties>
+
     <settings>
         <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
 
+    <!-- 定义类的别名 -->
+    <typeAliases>
+        <!-- 在映射文件中使用别名 -->
+        <typeAlias type="entity.ClientUser" alias="ClientUser"/>
+        <!-- 多个类，可以通过配置包扫描 默认别名为类名 -->
+        <package name="entity"/>
+    </typeAliases>
+
+
     <environments default="development">
+        <!-- 开发环境 -->
         <environment id="development">
-            <transactionManager type="JDBC" />
-            <!-- 配置数据库连接信息 -->
-            <dataSource type="POOLED">
-                <property name="driver" value="com.mysql.jdbc.Driver" />
-                <property name="url" value="jdbc:mysql://localhost:3306/test" />
-                <property name="username" value="test" />
-                <property name="password" value="123456" />
+            <!--决定事务作用域和控制方式的事务管理器（TransactionManager)  -->
+            <transactionManager type="JDBC"></transactionManager>
+            <!-- 配置数据库连接信息,数据源采用连接池POOLED/UNPOOLED -->
+            <!--<dataSource type="POOLED">-->
+                <!--<property name="driver" value="${jdbcDriver}" />-->
+                <!--<property name="url" value="${jdbcUrl}" />-->
+                <!--<property name="username" value="${jdbcUser}" />-->
+                <!--<property name="password" value="${jdbcPassword}" />-->
+            <!--</dataSource>-->
+
+            <dataSource type="config.DruidDataSourceFactory">
+                <property name="driverClassName" value="${jdbcDriver}"/>
+                <property name="url" value="${jdbcUrl}"/>
+                <property name="username" value="${jdbcUser}"/>
+                <property name="password" value="${jdbcPassword}"/>
+            </dataSource>
+        </environment>
+
+        <!-- 测试环境 C3P0连接池 -->
+        <environment id="test">
+            <transactionManager type="JDBC"></transactionManager>
+            <dataSource type="config.C3p0DatasourceFactory">
+                <property name="driverClass" value="${jdbcDriver}"/>
+                <property name="jdbcUrl" value="${jdbcUrl}"/>
+                <property name="user" value="${jdbcUser}"/>
+                <property name="password" value="${jdbcPassword}"/>
+                <property name="initialPoolSize" value="5"/>
+                <property name="maxPoolSize" value="20"/>
+                <property name="minPoolSize" value="5"/>
+            </dataSource>
+        </environment>
+
+        <!-- 生产环境 -->
+        <environment id="production">
+            <transactionManager type="JDBC"></transactionManager>
+            <dataSource type="config.DruidDataSourceFactory">
+                <property name="driverClassName" value="${jdbcDriver}"/>
+                <property name="url" value="${jdbcUrl}"/>
+                <property name="username" value="${jdbcUser}"/>
+                <property name="password" value="${jdbcPassword}"/>
             </dataSource>
         </environment>
     </environments>
 
     <mappers>
         <mapper resource="mapping/UserMapper.xml"/>
+        <mapper resource="mapping/ClientUserMapper.xml"/>
         <package name="mapping"/>
     </mappers>
 
