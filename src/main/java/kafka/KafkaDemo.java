@@ -1,4 +1,4 @@
-package middleware;
+package kafka;
 
 import org.apache.kafka.clients.consumer.*;
 import org.apache.kafka.clients.producer.*;
@@ -37,7 +37,7 @@ public class KafkaDemo {
 
         Duration duration = Duration.ofMillis(100);
         while (true) {
-            ConsumerRecords<String, String> records = consumer.poll(duration);
+            ConsumerRecords<String, String> records = consumer.poll(duration.toMillis());
             for (ConsumerRecord<String, String> record : records) {
                 logger.info("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
             }
