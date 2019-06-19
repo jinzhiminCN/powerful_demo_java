@@ -1,8 +1,10 @@
 package kafka;
 
 import java.util.Properties;
+import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +32,28 @@ public class KafkaProducerDemo implements Runnable {
 
     this.producer = new KafkaProducer<String, String>(props);
     this.topic = topicName;
+  }
+
+  public void produceTest(){
+    String messageStr = "你好，这是一条测试数据！";
+    ProducerRecord<String, String> record = new ProducerRecord<>(topic, "Message", messageStr);
+
+    // 方法 1，直接发送
+    producer.send(record);
+
+    // 方法 2，同步发送
+    RecordMetadata recordMetadata = null;
+    try{
+      recordMetadata = producer.send(record).get();
+      if(recordMetadata.offset() > 0){
+        logger.info("消息返回的 offset:" + recordMetadata.offset());
+      }
+    }catch (Exception e){
+      e.printStackTrace();
+    }
+
+    // 方法 3，异步发送
+      producer.send(record, new DemoProducerCallback());
   }
 
   @Override
@@ -62,4 +86,13 @@ public class KafkaProducerDemo implements Runnable {
     Thread thread = new Thread(test);
     thread.start();
   }
+}
+
+class DemoProducerCallback implements Callback {
+    @Override
+    public void onCompletion(RecordMetadata metadata, Exception exception) {
+        if (exception != null){
+            exception.printStackTrace();
+        }
+    }
 }
